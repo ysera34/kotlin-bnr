@@ -6,4 +6,11 @@ fun main(args: Array<String>) {
     println(playerName)
     println(experiencePoints)
     println(MAX_EXPERIENCE)
+
+    var hasSteed = false
+    var pubName = ""
+    var pubManagerName = ""
+    var pubDrinks: List<String> = listOf("mead", "wine", "LaCroix")
+
+    println(playerName.reversed())
 }
