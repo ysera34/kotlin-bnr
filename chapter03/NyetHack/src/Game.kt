@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
         println(name + " is worst state")
     }
 
-    val healthStatus = if (healthPoints == 100) {
+    var healthStatus = if (healthPoints == 100) {
         " is best state"
     } else if (healthPoints >= 90) {
         " has only a few abrasions."
@@ -55,5 +55,46 @@ fun main(args: Array<String>) {
     }
     if (arrowsInQuiver >= 5)
         println("Sufficient arrows.")
-        println("Can not have more arrows.")
+    println("Can not have more arrows.")
+
+    healthStatus = if (healthPoints == 100) {
+        " is best state"
+    } else if (healthPoints in 90..99) {
+        " has only a few abrasions."
+    } else if (healthPoints in 75..89) {
+        if (isBlessed) {
+            " had minor injuries but soon healed."
+        } else {
+            " has only minor injuries."
+        }
+    } else if (healthPoints in 15..74) {
+        " seems to be hurt a lot."
+    } else {
+        " is worst state"
+    }
+
+    println(name + healthStatus)
+
+    val race = "gnome"
+    val faction = when (race) {
+        "dwarf" -> "Keepers of the Mines"
+        "gnome" -> "Keepers of the Mines"
+        "orc" -> "Free People of the Rolling Hills"
+        "human" -> "Free People of the Rolling Hills"
+        else -> ""
+    }
+
+    healthStatus = when (healthPoints) {
+        100 -> " is best state"
+        in 90..99 -> " has only a few abrasions."
+        in 75..89 -> if (isBlessed) {
+            " had minor injuries but soon healed."
+        } else {
+            " has only minor injuries."
+        }
+        in 15..74 -> " seems to be hurt a lot."
+        else -> " is worst state"
+    }
+
+    println(name + healthStatus)
 }
