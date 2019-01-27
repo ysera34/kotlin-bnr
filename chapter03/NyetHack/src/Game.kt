@@ -11,11 +11,23 @@ fun main(args: Array<String>) {
     } else {
         println("NONE")
     }
-    val auraColor = if (auraVisible) "GREEN" else "NONE"
+    var auraColor = if (auraVisible) "GREEN" else "NONE"
     println(auraColor)
 
     println("(Aura: $auraColor) " +
             "(Blessed: ${if (isBlessed) "YES" else "NO"})")
+
+    val karma = (Math.pow(Math.random(), (110 - healthPoints) / 100.0) * 20).toInt()
+    auraColor = when (karma) {
+        in 0..5 -> "RED"
+        in 6..10 -> "ORANGE"
+        in 11..15 -> "PURPLE"
+        in 16..20 -> "GREEN"
+        else -> "NONE"
+    }
+    if (auraVisible) {
+        println(auraColor)
+    }
 
     if (healthPoints == 100) {
         println(name + " is best state")
@@ -100,4 +112,7 @@ fun main(args: Array<String>) {
     }
 
     println(name + healthStatus)
+
+    val statusFormatString = "(HP: $healthPoints)(Aura: $auraColor) -> $healthStatus"
+    println(statusFormatString)
 }
