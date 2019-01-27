@@ -14,6 +14,9 @@ fun main(args: Array<String>) {
     val auraColor = if (auraVisible) "GREEN" else "NONE"
     println(auraColor)
 
+    println("(Aura: $auraColor) " +
+            "(Blessed: ${if (isBlessed) "YES" else "NO"})")
+
     if (healthPoints == 100) {
         println(name + " is best state")
     } else if (healthPoints >= 90) {
