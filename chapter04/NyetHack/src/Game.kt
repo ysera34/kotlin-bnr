@@ -7,22 +7,28 @@ fun main(args: Array<String>) {
     val healthStatus = formatHealthStatus(healthPoints, isBlessed)
 
     printPlayerStatus(auraColor, isBlessed, name, healthStatus)
+    printPlayerStatus(
+        auraColor = "NONE",
+        isBlessed = true,
+        name = "mardregal",
+        healthStatus = "is best state")
     castFireball(5)
+    castFireball()
 }
 
-private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean): String {
-    return when (healthPoints) {
-        100 -> " is best state"
-        in 90..99 -> " has only a few abrasions."
+private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean) =
+    when (healthPoints) {
+        100 -> "is best state"
+        in 90..99 -> "has only a few abrasions."
         in 75..89 -> if (isBlessed) {
-            " had minor injuries but soon healed."
+            "had minor injuries but soon healed."
         } else {
-            " has only minor injuries."
+            "has only minor injuries."
         }
-        in 15..74 -> " seems to be hurt a lot."
-        else -> " is worst state"
+        in 15..74 -> "seems to be hurt a lot."
+        else -> "is worst state"
     }
-}
+
 
 private fun printPlayerStatus(
     auraColor: String,
@@ -42,6 +48,5 @@ private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean
     return if (auraVisible) "GREEN" else "NONE"
 }
 
-private fun castFireball(numFireballs: Int) {
+private fun castFireball(numFireballs: Int = 2) = // default argument
     println("A bunch of fireballs appear. (x$numFireballs)")
-}
