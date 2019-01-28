@@ -47,10 +47,8 @@ private fun printPlayerStatus(
     println("$name $healthStatus")
 }
 
-private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean): String {
-    val auraVisible = isBlessed && healthPoints > 50 || isImmortal
-    return if (auraVisible) "GREEN" else "NONE"
-}
+private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean) =
+    if (isBlessed && healthPoints > 50 || isImmortal) "GREEN" else "NONE"
 
 private fun castFireball(numFireballs: Int = 2) = // default argument
     println("A bunch of fireballs appear. (x$numFireballs)")
