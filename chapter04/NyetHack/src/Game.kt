@@ -3,35 +3,11 @@ fun main(args: Array<String>) {
     var healthPoints = 89
     val isBlessed = true
     val isImmortal = false
-    val auraVisible = isBlessed && healthPoints > 50 || isImmortal
-
-    val auraColor = if (auraVisible) "GREEN" else "NONE"
-    println(auraColor)
-
-    println("(Aura: $auraColor) " +
-            "(Blessed: ${if (isBlessed) "YES" else "NO"})")
-
-    var arrowsInQuiver = 2
-    if (arrowsInQuiver >= 5) {
-        println("Sufficient arrows.")
-        println("Can not have more arrows.")
-    }
-    if (arrowsInQuiver >= 5)
-        println("Sufficient arrows.")
-    println("Can not have more arrows.")
-
-    val race = "gnome"
-    val faction = when (race) {
-        "dwarf" -> "Keepers of the Mines"
-        "gnome" -> "Keepers of the Mines"
-        "orc" -> "Free People of the Rolling Hills"
-        "human" -> "Free People of the Rolling Hills"
-        else -> ""
-    }
-
+    val auraColor = auraColor(isBlessed, healthPoints, isImmortal)
     val healthStatus = formatHealthStatus(healthPoints, isBlessed)
 
-    println(name + healthStatus)
+    printPlayerStatus(auraColor, isBlessed, name, healthStatus)
+    castFireball(5)
 }
 
 private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean): String {
@@ -46,4 +22,26 @@ private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean): String {
         in 15..74 -> " seems to be hurt a lot."
         else -> " is worst state"
     }
+}
+
+private fun printPlayerStatus(
+    auraColor: String,
+    isBlessed: Boolean,
+    name: String,
+    healthStatus: String
+) {
+    println(
+        "(Aura: $auraColor) " +
+                "(Blessed: ${if (isBlessed) "YES" else "NO"})"
+    )
+    println("$name $healthStatus")
+}
+
+private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean): String {
+    val auraVisible = isBlessed && healthPoints > 50 || isImmortal
+    return if (auraVisible) "GREEN" else "NONE"
+}
+
+private fun castFireball(numFireballs: Int) {
+    println("A bunch of fireballs appear. (x$numFireballs)")
 }
