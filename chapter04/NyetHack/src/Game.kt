@@ -14,6 +14,10 @@ fun main(args: Array<String>) {
         healthStatus = "is best state")
     castFireball(5)
     castFireball()
+
+    performCombat()
+    performCombat("Ulrich")
+    performCombat("Hildr", true)
 }
 
 private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean) =
@@ -50,3 +54,19 @@ private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean
 
 private fun castFireball(numFireballs: Int = 2) = // default argument
     println("A bunch of fireballs appear. (x$numFireballs)")
+
+fun performCombat() {
+    println("There is no enemy.")
+}
+
+fun performCombat(enemyName: String) {
+    println("Begins battle with the $enemyName")
+}
+
+fun performCombat(enemyName: String, isBlessed: Boolean) {
+    if (isBlessed) {
+        println("Begins battle with the $enemyName. Blessed.")
+    } else {
+        println("Begins battle with the $enemyName")
+    }
+}
