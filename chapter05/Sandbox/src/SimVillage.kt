@@ -31,12 +31,18 @@ fun main(args: Array<String>) {
         "Welcome to SimVillage, (copyright $currentYear)"
     }())
 
-    val greetingFunction: () -> String = {
+    val greetingFunction1: () -> String = {
         val currentYear = 2019
         "Welcome to SimVillage, (copyright $currentYear)"
     }
-    println(greetingFunction)
-    println(greetingFunction())
+    val greetingFunction2 = {
+        val currentYear = 2019
+        "Welcome to SimVillage, (copyright $currentYear)"
+    }
+    println(greetingFunction1)
+    println(greetingFunction1())
+    println(greetingFunction2)
+    println(greetingFunction2())
 
     var greetingToPlayerFunction: (playerName: String) -> String = { playerName ->
         val currentYear = 2019
@@ -52,11 +58,18 @@ fun main(args: Array<String>) {
     println(greetingToPlayerFunction)
     println(greetingToPlayerFunction("james"))
 
-    val greetingToPlayerAndPrintInfoFunction: (String, Int) -> String = { playerName, buildingsNumber ->
+    val greetingToPlayerAndPrintInfoFunction1: (String, Int) -> String = { playerName, buildingsNumber ->
         println("$buildingsNumber buildings have been added.")
         val currentYear = 2019
         "Welcome to SimVillage, $playerName! (copyright $currentYear)"
     }
-    println(greetingToPlayerAndPrintInfoFunction)
-    println(greetingToPlayerAndPrintInfoFunction("james", 2))
+    val greetingToPlayerAndPrintInfoFunction2 = { playerName: String, buildingsNumber: Int ->
+        println("$buildingsNumber buildings have been added.")
+        val currentYear = 2019
+        "Welcome to SimVillage, $playerName! (copyright $currentYear)"
+    }
+    println(greetingToPlayerAndPrintInfoFunction1)
+    println(greetingToPlayerAndPrintInfoFunction1("james", 2))
+    println(greetingToPlayerAndPrintInfoFunction2)
+    println(greetingToPlayerAndPrintInfoFunction2("james", 3))
 }
