@@ -19,7 +19,8 @@ fun main(args: Array<String>) {
 
 fun checkProficient(jugglingSwords: Int?) {
 //    jugglingSwords ?: throw IllegalStateException("The player can not juggle.")
-    jugglingSwords ?: throw UnskilledSwordJugglerException()
+//    jugglingSwords ?: throw UnskilledSwordJugglerException()
+    checkNotNull(jugglingSwords) { "The player can not juggle." }
 }
 
 class UnskilledSwordJugglerException() : IllegalStateException("The player can not juggle.")
