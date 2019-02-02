@@ -7,8 +7,12 @@ fun main(args: Array<String>) {
         jugglingSwords = 2
     }
 
-    checkProficient(jugglingSwords)
-    jugglingSwords = jugglingSwords!!.plus(1)
+    try {
+        checkProficient(jugglingSwords)
+        jugglingSwords = jugglingSwords!!.plus(1)
+    } catch (e: Exception) {
+        println(e)
+    }
 
     println("juggle with $jugglingSwords knives.")
 }
