@@ -1,3 +1,5 @@
+import java.lang.IllegalStateException
+
 fun main(args: Array<String>) {
     var jugglingSwords: Int? = null
     val isJugglingProficient = (1..3).shuffled().last() == 3
@@ -12,5 +14,8 @@ fun main(args: Array<String>) {
 }
 
 fun checkProficient(jugglingSwords: Int?) {
-    jugglingSwords ?: throw IllegalArgumentException("The player can not juggle.")
+//    jugglingSwords ?: throw IllegalStateException("The player can not juggle.")
+    jugglingSwords ?: throw UnskilledSwordJugglerException()
 }
+
+class UnskilledSwordJugglerException() : IllegalStateException("The player can not juggle.")
