@@ -1,3 +1,5 @@
+const val TAVERN_NAME = "Taernyl's Folly"
+
 fun main(args: Array<String>) {
     var signatureDrink = "beer"
 //    signatureDrink = null // Error: Null can not be a value of a non-null type String
@@ -37,4 +39,20 @@ fun main(args: Array<String>) {
     beverage4?.let {
         beverage4 = it.capitalize()
     } ?: println("beverage is null")
+
+    placeOrder("shandy,Dragon's Breath,5.91")
+}
+
+private fun placeOrder(menuData: String) {
+    val indexOfApostrophe = TAVERN_NAME.indexOf('\'')
+    val tavernMaster = TAVERN_NAME.substring(0 until indexOfApostrophe)
+    println("Madrigal speaks with $tavernMaster about their order.")
+
+//    val data = menuData.split(',')
+//    val type = data[0]
+//    val name = data[1]
+//    val price = data[2]
+    val (type, name, price) = menuData.split(',')
+    val message = "Madrigal purchases $name ($type) with $price gold coin(s)."
+    println(message)
 }
