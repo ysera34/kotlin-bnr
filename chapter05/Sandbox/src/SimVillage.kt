@@ -72,4 +72,17 @@ fun main(args: Array<String>) {
     println(greetingToPlayerAndPrintInfoFunction1("james", 2))
     println(greetingToPlayerAndPrintInfoFunction2)
     println(greetingToPlayerAndPrintInfoFunction2("james", 3))
+
+    runSimulation("james", greetingToPlayerAndPrintInfoFunction1)
+    runSimulation("james", greetingToPlayerAndPrintInfoFunction2)
+    runSimulation("james") { playerName, buildingsNumber ->
+        println("$buildingsNumber buildings have been added.")
+        val currentYear = 2019
+        "Welcome to SimVillage, $playerName! (copyright $currentYear)"
+    }
+}
+
+fun runSimulation(playerName: String, greetingFunction: (String, Int) -> String) {
+    val buildingsNumber = (1..3).shuffled().last()
+    println(greetingFunction(playerName, buildingsNumber))
 }
