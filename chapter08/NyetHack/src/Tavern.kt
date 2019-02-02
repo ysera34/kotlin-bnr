@@ -8,6 +8,8 @@ var playerSilver = 10
 fun main(args: Array<String>) {
 
     placeOrder("shandy,Dragon's Breath,5.91")
+    placeOrder("shandy,Dragon's Breath,5.91")
+    placeOrder("shandy,Dragon's Breath,5.91")
 //    placeOrder("elixir,Shirley's Temple,4.12")
 }
 
@@ -16,25 +18,20 @@ private fun placeOrder(menuData: String) {
     val tavernMaster = TAVERN_NAME.substring(0 until indexOfApostrophe)
     println("Madrigal speaks with $tavernMaster about their order.")
 
-//    val data = menuData.split(',')
-//    val type = data[0]
-//    val name = data[1]
-//    val price = data[2]
     val (type, name, price) = menuData.split(',')
     val message = "Madrigal purchases $name ($type) with $price gold coin(s)."
     println(message)
 
-    performPurchase(price.toDouble())
+    val purchaseResult = performPurchase(price.toDouble())
 
-    val phrase1 = "wow. $name is really good"
-    println("Madrigal admires. ${toDragonSpeak(phrase1)}")
-
-    val phrase2 = if (name == "Dragon's Breath") {
-        "Madrigal admires. ${toDragonSpeak("wow. $name is really good")}"
-    } else {
-        "Madrigal says. Thanks $name."
+    if (purchaseResult) {
+        val phrase = if (name == "Dragon's Breath") {
+            "Madrigal admires. ${toDragonSpeak("wow. $name is really good")}"
+        } else {
+            "Madrigal says. Thanks $name."
+        }
+        println(phrase)
     }
-    println(phrase2)
 }
 
 private fun toDragonSpeak(phrase: String) =
@@ -49,12 +46,19 @@ private fun toDragonSpeak(phrase: String) =
         }
     }
 
-fun performPurchase(price: Double) {
+fun performPurchase(price: Double): Boolean {
     displayBalance()
     val totalPurse = playerGold + (playerSilver / 100.0)
     println("Total purse amount: $totalPurse")
-    println("Bought a drink for $price")
-    val remainingBalance = totalPurse - price
+    val remainingBalance = run {
+        if (totalPurse - price >= 0) {
+            println("Purchase the drink for $price")
+            totalPurse - price
+        } else {
+            println("There is not enough gold coins.")
+            totalPurse
+        }
+    }
     println("Purse balance. ${"%.2f".format(remainingBalance)}")
 
     val remainingGold = remainingBalance.toInt()
@@ -62,6 +66,8 @@ fun performPurchase(price: Double) {
     playerGold = remainingGold
     playerSilver = remainingSilver
     displayBalance()
+
+    return totalPurse != remainingBalance
 }
 
 fun displayBalance() {
