@@ -4,5 +4,13 @@ fun main(args: Array<String>) {
 
     var beverage = readLine()
 //    beverage = null
+//    beverage?.capitalize()
+    beverage = readLine()?.let {
+        if (it.isNotBlank()) {
+            it.capitalize()
+        } else {
+            "Beer"
+        }
+    }
     println(beverage)
 }
