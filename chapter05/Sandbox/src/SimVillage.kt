@@ -73,16 +73,37 @@ fun main(args: Array<String>) {
     println(greetingToPlayerAndPrintInfoFunction2)
     println(greetingToPlayerAndPrintInfoFunction2("james", 3))
 
-    runSimulation("james", greetingToPlayerAndPrintInfoFunction1)
-    runSimulation("james", greetingToPlayerAndPrintInfoFunction2)
-    runSimulation("james") { playerName, buildingsNumber ->
+    runSimulation1("james", greetingToPlayerAndPrintInfoFunction1)
+    runSimulation1("james", greetingToPlayerAndPrintInfoFunction2)
+    runSimulation1("james") { playerName, buildingsNumber ->
+        println("$buildingsNumber buildings have been added.")
+        val currentYear = 2019
+        "Welcome to SimVillage, $playerName! (copyright $currentYear)"
+    }
+
+    runSimulation2("james", ::printConstructionCost) { playerName, buildingsNumber ->
         println("$buildingsNumber buildings have been added.")
         val currentYear = 2019
         "Welcome to SimVillage, $playerName! (copyright $currentYear)"
     }
 }
 
-inline fun runSimulation(playerName: String, greetingFunction: (String, Int) -> String) {
+inline fun runSimulation1(playerName: String, greetingFunction: (String, Int) -> String) {
     val buildingsNumber = (1..3).shuffled().last()
     println(greetingFunction(playerName, buildingsNumber))
+}
+
+inline fun runSimulation2(
+    playerName: String,
+    costPrinter: (Int) -> Unit,
+    greetingFunction: (String, Int) -> String
+) {
+    val buildingsNumber = (1..3).shuffled().last()
+    costPrinter(buildingsNumber)
+    println(greetingFunction(playerName, buildingsNumber))
+}
+
+fun printConstructionCost(buildingsNumber: Int) {
+    val cost = 500
+    println("Construction Cost: ${cost * buildingsNumber}")
 }
