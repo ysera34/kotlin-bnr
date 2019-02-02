@@ -86,6 +86,8 @@ fun main(args: Array<String>) {
         val currentYear = 2019
         "Welcome to SimVillage, $playerName! (copyright $currentYear)"
     }
+
+    runSimulation3()
 }
 
 inline fun runSimulation1(playerName: String, greetingFunction: (String, Int) -> String) {
@@ -103,7 +105,23 @@ inline fun runSimulation2(
     println(greetingFunction(playerName, buildingsNumber))
 }
 
+fun runSimulation3() {
+    val greetingFunction = configureGreetingFunction()
+    println(greetingFunction("james"))
+}
+
 fun printConstructionCost(buildingsNumber: Int) {
     val cost = 500
     println("Construction Cost: ${cost * buildingsNumber}")
+}
+
+fun configureGreetingFunction(): (String) -> String {
+    val structureType = "Hospital"
+    var buildingsNumber = 5
+    return { playerName: String ->
+        val currentYear = 2019
+        buildingsNumber += 1
+        println("$buildingsNumber $structureType types have been added.")
+        "Welcome to SimVillage, $playerName! (copyright $currentYear)"
+    }
 }
