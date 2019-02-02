@@ -33,7 +33,6 @@ private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean) =
         else -> "is worst state"
     }
 
-
 private fun printPlayerStatus(
     auraColor: String,
     isBlessed: Boolean,
