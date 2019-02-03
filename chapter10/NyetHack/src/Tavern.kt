@@ -60,6 +60,12 @@ fun main(args: Array<String>) {
         uniquePatrons += name
     }
     println(uniquePatrons)
+
+    var orderCount = 0
+    while (orderCount <= 9) {
+        placeOrder(uniquePatrons.shuffled().first(), menuList.shuffled().first())
+        orderCount++
+    }
 }
 
 private fun placeOrder(patronName: String, menuData: String) {
