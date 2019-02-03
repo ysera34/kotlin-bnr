@@ -3,6 +3,14 @@ fun main(args: Array<String>) {
     var healthPoints = 89
     val isBlessed = true
     val isImmortal = false
+
+    val player = Player().apply {
+        castFireball(5)
+        castFireball()
+    }
+//    player.castFireball(5)
+//    player.castFireball()
+
     val auraColor = auraColor(isBlessed, healthPoints, isImmortal)
     val healthStatus = formatHealthStatus(healthPoints, isBlessed)
 
@@ -12,8 +20,6 @@ fun main(args: Array<String>) {
         isBlessed = true,
         name = "mardregal",
         healthStatus = "is best state")
-    castFireball(5)
-    castFireball()
 
     performCombat()
     performCombat("Ulrich")
@@ -48,9 +54,6 @@ private fun printPlayerStatus(
 
 private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean) =
     if (isBlessed && healthPoints > 50 || isImmortal) "GREEN" else "NONE"
-
-private fun castFireball(numFireballs: Int = 2) = // default argument
-    println("A bunch of fireballs appear. (x$numFireballs)")
 
 fun performCombat() {
     println("There is no enemy.")
