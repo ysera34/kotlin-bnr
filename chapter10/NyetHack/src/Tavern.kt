@@ -12,6 +12,7 @@ val uniquePatrons = mutableSetOf<String>()
 val menuList = File("data/tavern-menu-items.txt")
     .readText()
     .split("\n")
+val goodLookingMenuList = menuList.toMutableList()
 
 fun main(args: Array<String>) {
 
@@ -48,6 +49,47 @@ fun main(args: Array<String>) {
     val (goldMedalWinner, _, bronzeMedalWinner) = readOnlyPatronList
     println("Gold Medal Winner: $goldMedalWinner")
     println("Bronze Medal Winner: $bronzeMedalWinner")
+    
+    goodLookingMenuList.apply {
+        var longestMenuNameLength = 0
+        this.forEach {
+            val menuData = it.split(',')
+            if (longestMenuNameLength < menuData[1].length + menuData[2].length) {
+                longestMenuNameLength = menuData[1].length + menuData[2].length
+            }
+        }
+        longestMenuNameLength += 12
+        this.forEachIndexed { index, menu ->
+            val menuData = menu.split(',').toMutableList()
+            val times = longestMenuNameLength - (menuData[1].length + menuData[2].length)
+            menuData[1] = menuData[1].capitalize() + ".".repeat(times)
+            goodLookingMenuList[index] = menuData.joinToString(",")
+        }
+    }
+
+//    goodLookingMenuList.also { menu ->
+//        var longestMenuNameLength = 0
+//        menu.forEach {
+//            val menuData = it.split(',')
+//            if (longestMenuNameLength < menuData[1].length + menuData[2].length) {
+//                longestMenuNameLength = menuData[1].length + menuData[2].length
+//            }
+//        }
+//        longestMenuNameLength += 12
+//        menu.forEachIndexed { index, menuLine ->
+//            val menuData = menuLine.split(',').toMutableList()
+//            val times = longestMenuNameLength - (menuData[1].length + menuData[2].length)
+//            menuData[1] = menuData[1].capitalize() + ".".repeat(times)
+//            goodLookingMenuList[index] = menuData.joinToString(",")
+//        }
+//    }
+
+
+    println("*** Welcome to $TAVERN_NAME ***")
+    goodLookingMenuList.forEach {
+        val (_, menuName, price) = it.split(',')
+        println("$menuName$price")
+    }
 
     patronList.forEachIndexed { index, patron ->
         println("Good Night, $patron. You are ${index + 1}th patron.")
