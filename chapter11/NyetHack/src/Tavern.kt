@@ -64,7 +64,7 @@ fun main(args: Array<String>) {
     println(uniquePatronGold)
 
     var orderCount = 0
-    while (orderCount <= 9) {
+    while (uniquePatrons.isNotEmpty() && orderCount <= 9) {
         placeOrder(uniquePatrons.shuffled().first(), menuList.shuffled().first())
         orderCount++
     }
@@ -100,20 +100,35 @@ private fun placeOrder(patronName: String, menuData: String) {
     val (type, name, price) = menuData.split(',')
     val message = "$patronName purchases $name ($type) with $price gold coin(s)."
     println(message)
+    val purchaseResult = performPurchase(price.toDouble(), patronName)
 
-    performPurchase(price.toDouble(), patronName)
-
-    val phrase = if (name == "Dragon's Breath") {
-        "$patronName admires. ${toDragonSpeak("wow. $name is really good")}"
+    if (purchaseResult) {
+        val phrase = if (name == "Dragon's Breath") {
+            "$patronName admires. ${toDragonSpeak("wow. $name is really good")}"
+        } else {
+            "$patronName says. Thanks $name."
+        }
+        println(phrase)
     } else {
-        "$patronName says. Thanks $name."
+        println("Goodbye $patronName")
+        uniquePatrons.remove(patronName)
+        uniquePatronGold.remove(patronName)
     }
-    println(phrase)
 }
 
-private fun performPurchase(price: Double, patronName: String) {
+private fun performPurchase(price: Double, patronName: String): Boolean {
     val totalPurse = uniquePatronGold.getValue(patronName)
-    uniquePatronGold[patronName] = totalPurse - price
+    val remainingBalance = run {
+        if (totalPurse - price >= 0) {
+            println("Purchase the menu for $price")
+            totalPurse - price
+        } else {
+            println("There is not enough gold coins.")
+            totalPurse
+        }
+    }
+    uniquePatronGold[patronName] = remainingBalance
+    return totalPurse > price
 }
 
 private fun displayPatronBalances() {
