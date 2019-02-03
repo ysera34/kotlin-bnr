@@ -7,6 +7,8 @@ var playerGold = 10
 var playerSilver = 10
 //val patronList: List<String> = listOf("Eli", "Mordoc", "Sophie")
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie") // MutableList<String>
+val lastName = listOf("Ironfoot", "Fernsworth", "Baggins")
+val uniquePatrons = mutableSetOf<String>()
 val menuList = File("data/tavern-menu-items.txt")
     .readText()
     .split("\n")
@@ -47,19 +49,17 @@ fun main(args: Array<String>) {
     println("Gold Medal Winner: $goldMedalWinner")
     println("Bronze Medal Winner: $bronzeMedalWinner")
 
-    for (patron in patronList) {
-        println("Good Night, $patron")
-    }
-    patronList.forEach {
-        println("Good Night, $it")
-    }
     patronList.forEachIndexed { index, patron ->
         println("Good Night, $patron. You are ${index + 1}th patron.")
         placeOrder(patron, menuList.shuffled().first())
     }
-    menuList.forEachIndexed { index, menu ->
-        println("$index : $menu")
+    (0..9).forEach {
+        val first = patronList.shuffled().first()
+        val last = lastName.shuffled().first()
+        val name = "$first $last"
+        uniquePatrons += name
     }
+    println(uniquePatrons)
 }
 
 private fun placeOrder(patronName: String, menuData: String) {
