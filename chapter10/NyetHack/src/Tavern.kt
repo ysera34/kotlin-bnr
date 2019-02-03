@@ -1,3 +1,4 @@
+import java.io.File
 import kotlin.math.roundToInt
 
 const val TAVERN_NAME = "Taernyl's Folly"
@@ -5,8 +6,10 @@ const val TAVERN_NAME = "Taernyl's Folly"
 var playerGold = 10
 var playerSilver = 10
 //val patronList: List<String> = listOf("Eli", "Mordoc", "Sophie")
-val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
-// MutableList<String>
+val patronList = mutableListOf("Eli", "Mordoc", "Sophie") // MutableList<String>
+val menuList = File("data/tavern-menu-items.txt")
+    .readText()
+    .split("\n")
 
 fun main(args: Array<String>) {
 
@@ -40,6 +43,9 @@ fun main(args: Array<String>) {
     println(patronList)
 
     val readOnlyPatronList = patronList.toList()
+    val (goldMedalWinner, _, bronzeMedalWinner) = readOnlyPatronList
+    println("Gold Medal Winner: $goldMedalWinner")
+    println("Bronze Medal Winner: $bronzeMedalWinner")
 
     for (patron in patronList) {
         println("Good Night, $patron")
@@ -49,7 +55,10 @@ fun main(args: Array<String>) {
     }
     patronList.forEachIndexed { index, patron ->
         println("Good Night, $patron. You are ${index + 1}th patron.")
-        placeOrder(patron, "shandy,Dragon's Breath,5.91")
+        placeOrder(patron, menuList.shuffled().first())
+    }
+    menuList.forEachIndexed { index, menu ->
+        println("$index : $menu")
     }
 }
 
