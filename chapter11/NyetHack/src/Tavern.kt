@@ -3,8 +3,6 @@ import kotlin.math.roundToInt
 
 const val TAVERN_NAME = "Taernyl's Folly"
 
-var playerGold = 10
-var playerSilver = 10
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie") // MutableList<String>
 val lastName = listOf("Ironfoot", "Fernsworth", "Baggins")
 val uniquePatrons = mutableSetOf<String>()
@@ -15,9 +13,12 @@ val goodLookingMenuList = menuList.toMutableList()
 
 //val patronGold: Map<String, Double> = mapOf("Eli".to(10.5), "Mordoc".to(8.0), "Sophie".to(5.5))
 //val patronGold = mapOf("Eli" to 10.5, "Mordoc" to 8.0, "Sophie" to 5.5)
-val patronGold = mapOf(Pair("Eli", 10.5),
+val patronGold = mapOf(
+    Pair("Eli", 10.5),
     Pair("Mordoc", 8.0),
-    Pair("Sophie", 5.5))
+    Pair("Sophie", 5.5)
+)
+val uniquePatronGold = mutableMapOf<String, Double>()
 
 fun main(args: Array<String>) {
 
@@ -25,7 +26,7 @@ fun main(args: Array<String>) {
     val (goldMedalWinner, _, bronzeMedalWinner) = readOnlyPatronList
     println("Gold Medal Winner: $goldMedalWinner")
     println("Bronze Medal Winner: $bronzeMedalWinner")
-    
+
     goodLookingMenuList.apply {
         var longestMenuNameLength = 0
         this.forEach {
@@ -49,10 +50,6 @@ fun main(args: Array<String>) {
         println("$menuName$price")
     }
 
-    patronList.forEachIndexed { index, patron ->
-        println("Good Night, $patron. You are ${index + 1}th patron.")
-        placeOrder(patron, menuList.shuffled().first())
-    }
     (0..9).forEach {
         val first = patronList.shuffled().first()
         val last = lastName.shuffled().first()
@@ -60,12 +57,19 @@ fun main(args: Array<String>) {
         uniquePatrons += name
     }
     println(uniquePatrons)
+    uniquePatrons.forEach {
+        uniquePatronGold[it] = 6.0
+        uniquePatronGold += it to 6.0
+    }
+    println(uniquePatronGold)
 
     var orderCount = 0
     while (orderCount <= 9) {
         placeOrder(uniquePatrons.shuffled().first(), menuList.shuffled().first())
         orderCount++
     }
+
+    displayPatronBalances()
 
     val patrons1 = listOf("Eli Baggins", "Eli Baggins", "Eli Ironfoot")
         .toSet()
@@ -79,6 +83,13 @@ fun main(args: Array<String>) {
     println(mutablePatronGold)
     mutablePatronGold += "Sophie" to 6.0
     println(mutablePatronGold)
+
+//    patronGold.getValue("Reggie")
+//    patronGold.getValue("Reggie") // Exception: NoSuchElementException
+    var reggieGold = patronGold.getOrElse("Reggie") { "No such patron" }
+    println(reggieGold)
+    reggieGold = patronGold.getOrDefault("Reggie", 0.0)
+    println(reggieGold)
 }
 
 private fun placeOrder(patronName: String, menuData: String) {
@@ -90,7 +101,7 @@ private fun placeOrder(patronName: String, menuData: String) {
     val message = "$patronName purchases $name ($type) with $price gold coin(s)."
     println(message)
 
-    performPurchase(price.toDouble())
+    performPurchase(price.toDouble(), patronName)
 
     val phrase = if (name == "Dragon's Breath") {
         "$patronName admires. ${toDragonSpeak("wow. $name is really good")}"
@@ -98,6 +109,17 @@ private fun placeOrder(patronName: String, menuData: String) {
         "$patronName says. Thanks $name."
     }
     println(phrase)
+}
+
+private fun performPurchase(price: Double, patronName: String) {
+    val totalPurse = uniquePatronGold.getValue(patronName)
+    uniquePatronGold[patronName] = totalPurse - price
+}
+
+private fun displayPatronBalances() {
+    uniquePatronGold.forEach { patron, balance ->
+        println("$patron, balance: ${"%.2f".format(balance)}")
+    }
 }
 
 private fun toDragonSpeak(phrase: String) =
@@ -111,22 +133,3 @@ private fun toDragonSpeak(phrase: String) =
             else -> it.value
         }
     }
-
-fun performPurchase(price: Double) {
-    displayBalance()
-    val totalPurse = playerGold + (playerSilver / 100.0)
-    println("Total purse amount: $totalPurse")
-    val remainingBalance = totalPurse - price
-    println("Purchase the drink for $price")
-    println("Purse balance. ${"%.2f".format(remainingBalance)}")
-
-    val remainingGold = remainingBalance.toInt()
-    val remainingSilver = (remainingBalance % 1 * 100).roundToInt()
-    playerGold = remainingGold
-    playerSilver = remainingSilver
-    displayBalance()
-}
-
-fun displayBalance() {
-    println("The player's purse balance. Gold: $playerGold, Silver: $playerSilver")
-}
