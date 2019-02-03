@@ -66,6 +66,13 @@ fun main(args: Array<String>) {
         placeOrder(uniquePatrons.shuffled().first(), menuList.shuffled().first())
         orderCount++
     }
+
+    val patrons1 = listOf("Eli Baggins", "Eli Baggins", "Eli Ironfoot")
+        .toSet()
+        .toList()
+    val patrons2 = listOf("Eli Baggins", "Eli Baggins", "Eli Ironfoot").distinct()
+    println(patrons1)
+    println(patrons2)
 }
 
 private fun placeOrder(patronName: String, menuData: String) {
