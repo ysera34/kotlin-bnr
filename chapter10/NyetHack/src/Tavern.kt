@@ -4,7 +4,9 @@ const val TAVERN_NAME = "Taernyl's Folly"
 
 var playerGold = 10
 var playerSilver = 10
-val patronList: List<String> = listOf("Eli", "Mordoc", "Sophie")
+//val patronList: List<String> = listOf("Eli", "Mordoc", "Sophie")
+val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
+// MutableList<String>
 
 fun main(args: Array<String>) {
 
@@ -31,6 +33,17 @@ fun main(args: Array<String>) {
     } else {
         println("Taernyl owner talks. No, they all went out a few hours ago.")
     }
+
+    println(patronList)
+    patronList.remove("Eli")
+    patronList.add("Alex")
+    patronList.add(0, "Alex")
+    patronList[0] = "Alexis"
+    println(patronList)
+
+    val readOnlyPatronList = patronList.toList()
+
+
 }
 
 private fun placeOrder(menuData: String) {
