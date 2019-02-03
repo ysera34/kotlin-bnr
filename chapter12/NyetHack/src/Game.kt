@@ -1,5 +1,5 @@
 fun main(args: Array<String>) {
-    val name = "mardregal"
+
     var healthPoints = 89
     val isBlessed = true
     val isImmortal = false
@@ -14,11 +14,12 @@ fun main(args: Array<String>) {
     val auraColor = auraColor(isBlessed, healthPoints, isImmortal)
     val healthStatus = formatHealthStatus(healthPoints, isBlessed)
 
-    printPlayerStatus(auraColor, isBlessed, name, healthStatus)
+    printPlayerStatus(auraColor, isBlessed, player.name, healthStatus)
+    player.name = "estragon "
     printPlayerStatus(
         auraColor = "NONE",
         isBlessed = true,
-        name = "mardregal",
+        name = player.name,
         healthStatus = "is best state")
 
     performCombat()
