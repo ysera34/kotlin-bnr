@@ -13,6 +13,12 @@ val menuList = File("data/tavern-menu-items.txt")
     .split("\n")
 val goodLookingMenuList = menuList.toMutableList()
 
+//val patronGold: Map<String, Double> = mapOf("Eli".to(10.5), "Mordoc".to(8.0), "Sophie".to(5.5))
+//val patronGold = mapOf("Eli" to 10.5, "Mordoc" to 8.0, "Sophie" to 5.5)
+val patronGold = mapOf(Pair("Eli", 10.5),
+    Pair("Mordoc", 8.0),
+    Pair("Sophie", 5.5))
+
 fun main(args: Array<String>) {
 
     val readOnlyPatronList = patronList.toList()
@@ -67,6 +73,12 @@ fun main(args: Array<String>) {
     val patrons2 = listOf("Eli Baggins", "Eli Baggins", "Eli Ironfoot").distinct()
     println(patrons1)
     println(patrons2)
+
+    println(patronGold)
+    val mutablePatronGold = patronGold.toMutableMap()
+    println(mutablePatronGold)
+    mutablePatronGold += "Sophie" to 6.0
+    println(mutablePatronGold)
 }
 
 private fun placeOrder(patronName: String, menuData: String) {
