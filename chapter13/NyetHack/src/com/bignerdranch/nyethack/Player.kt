@@ -3,10 +3,12 @@ package com.bignerdranch.nyethack
 /**
  * primary constructor
  */
-class Player(_name: String,
+class Player(
+    _name: String,
     /*_healthPoints*/var healthPoints: Int = 100,
     /*_isBlessed*/val isBlessed: Boolean,
-    /*_isImmortal*/private val isImmortal : Boolean) {
+    /*_isImmortal*/private val isImmortal: Boolean
+) {
 
     /**
      * If you are using a custom getter setter,
@@ -26,6 +28,14 @@ class Player(_name: String,
     /*var healthPoints = _healthPoints*/
     /*val isBlessed = _isBlessed*/
     /*private val isImmortal = _isImmortal*/
+
+    /**
+     * initializer block, check property value
+     */
+    init {
+        require(healthPoints > 0) { "healthPoints must be greater than zero." }
+        require(name.isNotBlank()) { "player must have a name." }
+    }
 
     /**
      * secondary constructor
