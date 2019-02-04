@@ -27,6 +27,18 @@ class Player(_name: String,
     /*val isBlessed = _isBlessed*/
     /*private val isImmortal = _isImmortal*/
 
+    /**
+     * secondary constructor
+     */
+    constructor(name: String) : this(
+        name,
+        healthPoints = 100,
+        isBlessed = true,
+        isImmortal = false
+    ) {
+        if (name.toLowerCase() == "kar") healthPoints = 40
+    }
+
     fun castFireball(numFireballs: Int = 2) = // default argument
         println("A bunch of fireballs appear. (x$numFireballs)")
 

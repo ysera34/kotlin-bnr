@@ -5,6 +5,8 @@ fun main(args: Array<String>) {
         castFireball(5)
         castFireball()
     }
+    val secondaryPlayer = Player("Kar")
+    println("${secondaryPlayer.name}'s healthPoints: ${secondaryPlayer.healthPoints}")
 
     printPlayerStatus(player)
 
