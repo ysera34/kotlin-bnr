@@ -23,7 +23,8 @@ class Player(
             field = value.trim()
         }
 
-    val hometown: String = selectHometown()
+    /*val hometown: String = selectHometown()*/
+    val hometown by lazy { selectHometown() }
 
     /**
      * Properties that use automatically generated default getters and setters
