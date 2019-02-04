@@ -1,5 +1,7 @@
 package com.bignerdranch.nyethack
 
+import java.io.File
+
 /**
  * primary constructor
  */
@@ -16,10 +18,12 @@ class Player(
      * and constructor parameter that use temporary variables.
      */
     var name = _name
-        get() = field.capitalize()
+        get() = "${field.capitalize()} of $hometown"
         set(value) {
             field = value.trim()
         }
+
+    val hometown: String = selectHometown()
 
     /**
      * Properties that use automatically generated default getters and setters
@@ -48,6 +52,12 @@ class Player(
     ) {
         if (name.toLowerCase() == "kar") healthPoints = 40
     }
+
+    private fun selectHometown() = File("data/towns.txt")
+        .readText()
+        .split("\n")
+        .shuffled()
+        .first()
 
     fun castFireball(numFireballs: Int = 2) = // default argument
         println("A bunch of fireballs appear. (x$numFireballs)")
