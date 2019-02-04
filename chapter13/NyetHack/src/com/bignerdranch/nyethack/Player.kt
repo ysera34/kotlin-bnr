@@ -1,15 +1,31 @@
 package com.bignerdranch.nyethack
 
-class Player {
-    var name = "mardregal"
+/**
+ * primary constructor
+ */
+class Player(_name: String,
+    /*_healthPoints*/var healthPoints: Int,
+    /*_isBlessed*/val isBlessed: Boolean,
+    /*_isImmortal*/private val isImmortal : Boolean) {
+
+    /**
+     * If you are using a custom getter setter,
+     * you must define class properties
+     * and constructor parameter that use temporary variables.
+     */
+    var name = _name
         get() = field.capitalize()
         set(value) {
             field = value.trim()
         }
 
-    var healthPoints = 89
-    val isBlessed = true
-    private val isImmortal = false
+    /**
+     * Properties that use automatically generated default getters and setters
+     * can be defined only in the primary constructor, not in the class itself.
+     */
+    /*var healthPoints = _healthPoints*/
+    /*val isBlessed = _isBlessed*/
+    /*private val isImmortal = _isImmortal*/
 
     fun castFireball(numFireballs: Int = 2) = // default argument
         println("A bunch of fireballs appear. (x$numFireballs)")
