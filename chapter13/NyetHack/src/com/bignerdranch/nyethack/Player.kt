@@ -4,7 +4,7 @@ package com.bignerdranch.nyethack
  * primary constructor
  */
 class Player(_name: String,
-    /*_healthPoints*/var healthPoints: Int,
+    /*_healthPoints*/var healthPoints: Int = 100,
     /*_isBlessed*/val isBlessed: Boolean,
     /*_isImmortal*/private val isImmortal : Boolean) {
 
@@ -32,7 +32,7 @@ class Player(_name: String,
      */
     constructor(name: String) : this(
         name,
-        healthPoints = 100,
+        /*healthPoints = 100,*/ // using default value of primary constructor
         isBlessed = true,
         isImmortal = false
     ) {
