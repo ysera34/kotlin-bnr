@@ -12,9 +12,15 @@ fun main(args: Array<String>) {
     println(currentRoom.description())
     println(currentRoom.load())
 
+    println(currentRoom is Room) // true
+    println(currentRoom is TownSquare) // false
+
     currentRoom = TownSquare()
     println(currentRoom.description())
     println(currentRoom.load())
+
+    println(currentRoom is Room) // true
+    println(currentRoom is TownSquare) // true
 
     printPlayerStatus(player)
 
