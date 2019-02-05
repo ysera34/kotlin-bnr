@@ -51,3 +51,13 @@ fun performCombat(enemyName: String, isBlessed: Boolean) {
         println("Begins battle with the $enemyName")
     }
 }
+
+fun printIsSourceOfBlessings(any: Any) {
+    val isSourceOfBlessings = if (any is Player) {
+        any.isBlessed
+    } else {
+        (any as Room).name == "Fount of Blessings"
+    }
+
+    println("$any is a source of blessings: $isSourceOfBlessings")
+}
