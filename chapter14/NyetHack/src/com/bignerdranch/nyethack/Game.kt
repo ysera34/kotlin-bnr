@@ -8,6 +8,14 @@ fun main(args: Array<String>) {
     val secondaryPlayer = Player("Kar")
     println("${secondaryPlayer.name}'s healthPoints: ${secondaryPlayer.healthPoints}")
 
+    var currentRoom = Room("Foyer")
+    println(currentRoom.description())
+    println(currentRoom.load())
+
+    currentRoom = TownSquare()
+    println(currentRoom.description())
+    println(currentRoom.load())
+
     printPlayerStatus(player)
 
     performCombat()
