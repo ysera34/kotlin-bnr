@@ -38,4 +38,20 @@ fun main(args: Array<String>) {
 
     val fedora = lootBoxOne[1]
     fedora?.let { println(it.name) }
+
+    randomOrBackupLoot {
+        Fedora("Alternative fedora", 15)
+    }.run {
+        println(name)
+    }
+}
+
+inline fun <reified T> randomOrBackupLoot(backupLoot: () -> T): T {
+    val items = listOf(Coin(14), Fedora("An old fashioned fedora.", 150))
+    val randomLoot: Loot = items.shuffled().first()
+    return if (randomLoot is T) {
+        randomLoot
+    } else {
+        backupLoot()
+    }
 }
