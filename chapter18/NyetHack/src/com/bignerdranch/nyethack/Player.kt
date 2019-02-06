@@ -1,6 +1,7 @@
 package com.bignerdranch.nyethack
 
 import java.io.File
+import com.bignerdranch.nyethack.extensions.random as randomizer
 
 /**
  * primary constructor
@@ -77,8 +78,7 @@ class Player(
     private fun selectHometown() = File("data/towns.txt")
         .readText()
         .split("\n")
-        .shuffled()
-        .first()
+        .randomizer()
 
     fun castFireball(numFireballs: Int = 2) = // default argument
         println("A bunch of fireballs appear. (x$numFireballs)")
