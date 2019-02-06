@@ -25,6 +25,7 @@ object Game {
         listOf(currentRoom, Room("Tavern"), Room("Back Room")),
         listOf(Room("Long Corridor"), Room("Generic Room"))
     )
+    private var exitCode = ""
 
     init {
         println("Welcome to visit.")
@@ -32,7 +33,7 @@ object Game {
     }
 
     fun play() {
-        while (true) {
+        while (exitCode != "end") {
             println(currentRoom.description())
             println(currentRoom.load())
 
@@ -60,6 +61,29 @@ object Game {
             "Wrong direction: $directionInput"
         }
 
+    private fun displayCurrentPosition(): String {
+        var result = ""
+
+        worldMap.forEachIndexed { listIndex, list ->
+            list.forEachIndexed { roomIndex, room ->
+                if (listIndex == player.currentPosition.y && roomIndex == player.currentPosition.x) {
+                    result += "X "
+                } else {
+                    result += "O "
+                }
+            }
+            result += "\n"
+        }
+        return result
+    }
+
+    private fun ring(): String =
+        if (currentRoom is TownSquare) {
+            (currentRoom as TownSquare).ringBell()
+        } else {
+            "You can not hit a bell in this space."
+        }
+
     private fun printPlayerStatus(player: Player) {
         println(
             "(Aura: ${player.auraColor()}) (Blessed: ${if (player.isBlessed) "YES" else "NO"})"
@@ -74,9 +98,18 @@ object Game {
 
         fun processCommand() = when (command.toLowerCase()) {
             "move" -> move(argument)
-            else -> commentNotFound()
+            "map" -> displayCurrentPosition()
+            "ring" -> ring()
+            "quit" -> finish()
+            "exit" -> finish()
+            else -> commandNotFound()
         }
 
-        private fun commentNotFound() = "This is an invalid command."
+        private fun finish(): String {
+            exitCode = "end"
+            return "Finish game."
+        }
+
+        private fun commandNotFound() = "This is an invalid command."
     }
 }
