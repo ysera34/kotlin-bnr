@@ -7,10 +7,22 @@ import java.io.File
  */
 class Player(
     _name: String,
-    /*_healthPoints*/var healthPoints: Int = 100,
+    /*_healthPoints*/override var healthPoints: Int = 100,
     /*_isBlessed*/val isBlessed: Boolean,
     /*_isImmortal*/private val isImmortal: Boolean
-) {
+) : Fightable {
+    override val diceCount: Int = 3
+    override val diceSides: Int = 6
+
+    override fun attack(opponent: Fightable): Int {
+        val damageDealt = if (isBlessed) {
+            damageRoll * 2
+        } else {
+            damageRoll
+        }
+        opponent.healthPoints -= damageDealt
+        return damageDealt
+    }
 
     /**
      * If you are using a custom getter setter,
