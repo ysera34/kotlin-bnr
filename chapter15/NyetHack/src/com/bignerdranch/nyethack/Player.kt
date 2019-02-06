@@ -26,6 +26,8 @@ class Player(
     /*val hometown: String = selectHometown()*/
     val hometown by lazy { selectHometown() }
 
+    var currentPosition = Coordinate(0, 0)
+
     /**
      * Properties that use automatically generated default getters and setters
      * can be defined only in the primary constructor, not in the class itself.
@@ -54,6 +56,13 @@ class Player(
         if (name.toLowerCase() == "kar") healthPoints = 40
     }
 
+    class PlayerScore1(val experience: Int, val level: Int) {
+        operator fun component1() = experience
+        operator fun component2() = level
+    }
+
+    data class PlayerScore2(val experience: Int, val level: Int)
+
     private fun selectHometown() = File("data/towns.txt")
         .readText()
         .split("\n")
@@ -77,4 +86,12 @@ class Player(
         }
 
     fun auraColor() = if (isBlessed && healthPoints > 50 || isImmortal) "GREEN" else "NONE"
+}
+
+fun main(args: Array<String>) {
+    val (vExperience1, vLevel1) = Player.PlayerScore1(1250, 5)
+    println("vExperience1 = $vExperience1, vLevel1 = $vLevel1")
+
+    val (vExperience2, vLevel2) = Player.PlayerScore2(1250, 5)
+    println("vExperience2 = $vExperience2, vLevel2 = $vLevel2")
 }
