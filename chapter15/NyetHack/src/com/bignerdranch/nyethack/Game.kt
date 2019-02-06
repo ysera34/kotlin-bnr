@@ -1,5 +1,7 @@
 package com.bignerdranch.nyethack
 
+import java.lang.Exception
+
 /**
  * object expression
  */
@@ -19,6 +21,11 @@ object Game {
     private val player = Player("Madrigal")
     private var currentRoom: Room = TownSquare()
 
+    private var worldMap = listOf(
+        listOf(currentRoom, Room("Tavern"), Room("Back Room")),
+        listOf(Room("Long Corridor"), Room("Generic Room"))
+    )
+
     init {
         println("Welcome to visit.")
         player.castFireball()
@@ -36,6 +43,23 @@ object Game {
         }
     }
 
+    private fun move(directionInput: String) =
+        try {
+            val direction = Direction.valueOf(directionInput.toUpperCase())
+            val newPosition = direction.updateCoordinate(player.currentPosition)
+            if (!newPosition.isInBounds) {
+                throw IllegalStateException("The $direction direction is out of range.")
+            }
+
+            val newRoom = worldMap[newPosition.y][newPosition.x]
+            player.currentPosition = newPosition
+            currentRoom = newRoom
+            "OK, move to the ${newRoom.name} in the $direction direction "
+        } catch (e: Exception) {
+            println(e)
+            "Wrong direction: $directionInput"
+        }
+
     private fun printPlayerStatus(player: Player) {
         println(
             "(Aura: ${player.auraColor()}) (Blessed: ${if (player.isBlessed) "YES" else "NO"})"
@@ -49,6 +73,7 @@ object Game {
         val argument = input.split(" ").getOrElse(1) { "" }
 
         fun processCommand() = when (command.toLowerCase()) {
+            "move" -> move(argument)
             else -> commentNotFound()
         }
 
