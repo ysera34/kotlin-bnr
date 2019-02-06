@@ -1,6 +1,7 @@
 package com.bignerdranch.nyethack
 
 import java.lang.Exception
+import kotlin.system.exitProcess
 
 /**
  * object expression
@@ -94,12 +95,35 @@ object Game {
         println("${player.name} ${player.formatHealthStatus()}")
     }
 
+    private fun fight() = currentRoom.monster?.let {
+        while (player.healthPoints > 0 && it.healthPoints > 0) {
+            slay(it)
+            Thread.sleep(1000)
+        }
+
+        "The fight is over."
+    } ?: "There are no monsters to fight here."
+
+    private fun slay(monster: Monster) {
+        println("${monster.name} -- ${monster.attack(player)} damaged!!")
+        println("${player.name} -- ${player.attack(monster)} damaged!!")
+
+        if (player.healthPoints <= 0) {
+            println(">>> You are lost. End the game. <<<")
+            exitProcess(0)
+        }
+
+        if (monster.healthPoints <= 0) {
+            println(">>> Repel the ${monster.name}!! <<<")
+        }
+    }
     private class GameInput(arg: String?) {
         private val input = arg ?: ""
         val command = input.split(" ")[0]
         val argument = input.split(" ").getOrElse(1) { "" }
 
         fun processCommand() = when (command.toLowerCase()) {
+            "fight" -> fight()
             "move" -> move(argument)
             "map" -> displayCurrentPosition()
             "ring" -> ring()
