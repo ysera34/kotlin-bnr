@@ -22,6 +22,10 @@ public class Jhava {
         this.greeting = greeting;
     }
 
+    public void offerFood() {
+        Hero.handOverFood("pizza");
+    }
+
     @NotNull
     public String utterGreeting() {
         return greeting;
@@ -30,5 +34,19 @@ public class Jhava {
     @Nullable
     public String determineFriendshipLevel() {
         return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Hero.makeProclamation());
+
+        System.out.println("Spells: ");
+        Spellbook spellbook = new Spellbook();
+        for (String spell : spellbook.spells) {
+            System.out.println(spell);
+        }
+        System.out.println(String.format("Max spell count: %d", Spellbook.MAX_SPELL_COUNT));
+
+        spellbook.getSpellbookGreeting();
+        Spellbook.getSpellbookGreeting();
     }
 }
