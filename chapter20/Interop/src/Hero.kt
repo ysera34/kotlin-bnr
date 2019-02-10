@@ -8,4 +8,7 @@ fun main(args: Array<String>) {
     val adversaryHitPoints: Int = adversary.hitPoints
     println(adversaryHitPoints.dec())
     println(adversaryHitPoints.javaClass)
+
+    adversary.greeting = "Hi. A mighty man."
+    println(adversary.utterGreeting())
 }
