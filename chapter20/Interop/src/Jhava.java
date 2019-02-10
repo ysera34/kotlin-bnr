@@ -1,3 +1,5 @@
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,5 +68,8 @@ public class Jhava {
 
         Jhava jhava = new Jhava();
         jhava.apologize();
+
+        Function1<String, Unit> translatorJ = Hero.getTranslator();
+        translatorJ.invoke("TRUCE");
     }
 }
