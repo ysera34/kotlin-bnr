@@ -3,6 +3,7 @@ package android.bignerdranch.samodelkin
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_new_character.*
+import kotlinx.coroutines.*
 
 private const val CHARACTER_DATA_KEY = "CHARACTER_DATA_KEY"
 
@@ -20,8 +21,14 @@ class NewCharacterActivity : AppCompatActivity() {
         characterData = savedInstanceState?.characterData ?: CharacterGenerator.generate()
 
         generateButton.setOnClickListener {
-            characterData = CharacterGenerator.generate()
-            displayCharacterData()
+//            characterData = CharacterGenerator.generate()
+//            characterData = CharacterGenerator.fromApiData("halfling,Lars Kizzy,14,13,8")
+            GlobalScope.launch(Dispatchers.IO) {
+                characterData = async { fetchCharacterData() }.await()
+                withContext(Dispatchers.Main) {
+                    displayCharacterData()
+                }
+            }
         }
         displayCharacterData()
     }
